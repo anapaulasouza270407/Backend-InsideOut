@@ -6,6 +6,9 @@ from schemas.schemas import UserCreate, UserLogin, Token, User as UserSchema
 from services.auth_service import authenticate_user
 from Utils import get_password_hash, create_access_token, calculate_age
 from datetime import timedelta
+from services.auth_service import get_current_user
+
+
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -15,11 +18,14 @@ async def login(user_data: UserLogin, db: Session = Depends(get_db)):
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            details="Credenciais inválidas"
+            detail="Credenciais inválidas"
         )
     
     access_token = create_access_token(
-        data={"sub": user.email}, 
+        data={
+            "sub": user.email,
+            "id": user.id
+        },
         expires_delta=timedelta(minutes=30)
     )
     
@@ -31,15 +37,13 @@ async def login(user_data: UserLogin, db: Session = Depends(get_db)):
 
 @router.post("/register", response_model=Token)
 async def register(user_data: UserCreate, db: Session = Depends(get_db)):
-    # Verifica se usuário já existe
     existing_user = db.query(User).filter(User.email == user_data.email).first()
     if existing_user:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            details="Email já cadastrado"
+            detail="Email já cadastrado"
         )
     
-    # Cria novo usuário
     hashed_password = get_password_hash(user_data.password)
     db_user = User(
         email=user_data.email,
@@ -55,7 +59,6 @@ async def register(user_data: UserCreate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(db_user)
     
-    # Se for paciente, cria registro na tabela de pacientes
     if user_data.type == UserType.PACIENTE and user_data.birth_date:
         age = calculate_age(user_data.birth_date)
         db_patient = Patient(
@@ -71,7 +74,10 @@ async def register(user_data: UserCreate, db: Session = Depends(get_db)):
         db.commit()
     
     access_token = create_access_token(
-        data={"sub": db_user.email},
+        data={
+            "sub": db_user.email,
+            "id": db_user.id
+        },
         expires_delta=timedelta(minutes=30)
     )
     
@@ -80,3 +86,8 @@ async def register(user_data: UserCreate, db: Session = Depends(get_db)):
         token_type="bearer",
         user=UserSchema.from_orm(db_user)
     )
+
+@router.get("/me", response_model=UserSchema)
+async def get_me(current_user: User = Depends(get_current_user)):
+    return UserSchema.from_orm(current_user)
+    

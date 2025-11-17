@@ -148,3 +148,4 @@ async def add_patient_note(
     # TODO: Implementar sistema de anotações separadamente no banco
     # Atualmente, apenas retorna uma mensagem de sucesso
     return {"id": patient_id, "message": "Anotação adicionada com sucesso"}
+

@@ -20,67 +20,37 @@ Banco utilizado: **`insideout.db`** (SQLite).
 
 ## 🗂️ Estrutura do Projeto
 
-/project
-│── core/
-
-│ └── database.py
-
-│
-
-│── models/
-
-│ └── models.py
-
-│
-
-│── routers/
-
-│ ├── auth.py
-
-
-│ ├── patients.py
-
-│ ├── psychologists.py
-
-│ ├── appointments.py
-
-│ ├── requests.py
-
-│ ├── reports.py
-
-│ └── ml_analysis.py
-
-│
-
-│── schemas/
-
-│ └── schemas.py
-
-│
-
-│── services/
-
-│ ├── auth_service.py
-
-│ ├── report_service.py
-
-│ └── ml_services.py
-
-│
-
-│── Utils.py
-
-│── seed_data.py
-
-│── test.py
-
-│── requirements.txt
-
-│── .env
-
-│── insideout.db
-
-└── main.py
+/project<br>
+│── core/<br>
+│ └── database.py<br>
+│<br>
+│── models/<br>
+│ └── models.py<br>
+│<br>
+│── routers/<br>
+│ ├── auth.py<br>
+│ ├── patients.py<br>
+│ ├── psychologists.py<br>
+│ ├── appointments.py<br>
+│ ├── requests.py<br>
+│ ├── reports.py<br>
+│ └── ml_analysis.py<br>
+│<br>
+│── schemas/<br>
+│ └── schemas.py<br>
+│<br>
+│── services/<br>
+│ ├── auth_service.py<br>
+│ ├── report_service.py<br>
+│ └── ml_services.py<br>
+│<br>
+│── Utils.py<br>
+│── seed_data.py<br>
+│── test.py<br>
+│── requirements.txt<br>
+│── .env<br>
+│── insideout.db<br>
+└── main.py<br>
 
 ---
 

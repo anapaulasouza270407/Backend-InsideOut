@@ -22,34 +22,64 @@ Banco utilizado: **`insideout.db`** (SQLite).
 
 /project
 │── core/
+
 │ └── database.py
+
 │
+
 │── models/
+
 │ └── models.py
+
 │
+
 │── routers/
+
 │ ├── auth.py
+
+
 │ ├── patients.py
+
 │ ├── psychologists.py
+
 │ ├── appointments.py
+
 │ ├── requests.py
+
 │ ├── reports.py
+
 │ └── ml_analysis.py
+
 │
+
 │── schemas/
+
 │ └── schemas.py
+
 │
+
 │── services/
+
 │ ├── auth_service.py
+
 │ ├── report_service.py
+
 │ └── ml_services.py
+
 │
+
 │── Utils.py
+
 │── seed_data.py
+
 │── test.py
+
 │── requirements.txt
+
 │── .env
+
 │── insideout.db
+
 └── main.py
 
 ---
